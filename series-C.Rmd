@@ -1,0 +1,77 @@
+---
+title: "Internal Assessment 2"
+output:
+  pdf_document: default
+  editor_options:
+  chunk_output_type: console
+---
+
+\begin{center}
+{\Large ECON03SEC1}\\
+{\Large Department of Economics}\\
+{\Large Presidency University, Kolkata}\\
+{\large Full Marks: 40}\\
+{\large 21/01/2022}
+\end{center}
+
+
+
+
+
+\begin{center}
+\textbf{Group 1 (R)}
+\end{center}
+
+Answer all of the following questions. [4 $\times$ 5 = 20]
+
+1. Explain the following codes and their outputs.
+```{r, eval=FALSE}
+a2 <- matrix(1:9, nrow = 3)
+colnames(a2) <- c("A", "B", "C")
+
+a2[c(TRUE, FALSE, TRUE), c("B", "A")]
+```
+
+2. In the `starwars` dataset in the `dplyr` package, which species has the most number of blue eye colour?
+```{r, echo=FALSE, eval=FALSE}
+starwars %>% 
+  filter(eye_color== "blue") %>% 
+  group_by(species) %>% 
+  count()
+```
+
+3. Using the `iris` dataset in the base R `datasets` package, replicate the following plot.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+ggplot(iris)+
+  geom_point(aes(x = Sepal.Length,
+                 y = Sepal.Width,
+                 shape = Species,
+                 col = Species))
+```
+
+4. Tidy and replicate the `who` dataset in the `tidyr` package as given below.
+```{r, echo=FALSE}
+who %>% 
+  pivot_longer(cols = new_sp_m014:newrel_f65,
+               names_to = "Diagnosis",
+               values_to = "Value") %>% 
+  filter(country == "India" & year == 2002) %>% 
+  arrange(desc(Value))
+```
+
+
+\begin{center}
+\textbf{Group 2 (Excel)}
+\end{center}
+
+Answer all of the following questions. [4 $\times$ 5 = 20]
+
+1. Using the `GDP.xlsx` data replicate the following plot.
+
+![](bar.png)
+
+2. Calculate the mean *mpg* (miles per gallon) of the  cars with 6 and 4 cylinders in `mtcars.xlsx` dataset?
+3. How many missing values are there in total in the `GDP.xlsx` dataset? Find how many countries are listed in the data without using the filter option?
+4. Suppose that the firm’s production function is $Q=F(K,L)=50K^{0.5}L^{0.5}$. Suppose, too, that the price of labour w=5 and the price of capital r=20. What is the cost minimising input bundle if the firm wants to produce 1,000 units per year?

@@ -1,0 +1,76 @@
+---
+title: "Internal Assessment 2"
+output:
+  pdf_document: default
+  editor_options:
+  chunk_output_type: console
+---
+
+\begin{center}
+{\Large ECON03SEC1}\\
+{\Large Department of Economics}\\
+{\Large Presidency University, Kolkata}\\
+{\large Full Marks: 40}\\
+{\large 21/01/2022}
+\end{center}
+
+
+
+
+
+\begin{center}
+\textbf{Group 1 (R)}
+\end{center}
+
+Answer all of the following questions. [4 $\times$ 5 = 20]
+
+
+
+1. Using the `mpg` dataset in the `ggplot2` package, replicate the following plot.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+na.omit(mpg) %>% 
+ggplot(aes(manufacturer, displ))+
+  geom_bar(aes(fill = class),
+           stat = "identity")+
+  coord_flip()
+```
+
+2. In the `starwars` dataset in the `dplyr` package, how many species have a fair skin colour?
+```{r, echo=FALSE, eval=FALSE}
+starwars %>% 
+  filter(skin_color == "fair") %>% 
+  select(species, skin_color)
+```
+
+
+3. Tidy and replicate the `population` dataset in the `tidyr` package as given below.
+
+```{r, echo=FALSE}
+population %>% 
+  pivot_wider(names_from = year,
+              values_from = population) %>% 
+  filter(country %in% c("India", "China")) %>% 
+  arrange(desc(country))
+```
+
+
+4. Explain the following codes and their outputs.
+```{r, eval=FALSE}
+a5 <- factor(c("high", "low", "medium", "medium", "high"), levels = c("low", "medium", "high"), ordered = TRUE)
+a5
+```
+
+
+\begin{center}
+\textbf{Group 2 (Excel)}
+\end{center}
+
+
+Answer all of the following questions. [4 $\times$ 5 = 20]
+
+1. Using the data `GDP.xlsx`, for any two countries plot separate line charts for the components of GDP (Household Consumption Expenditure, Government final consumption expenditure, Net exports and Gross Capital formation).
+2. Which specie has the longest and the widest petal in the `iris.xlsx` data?
+3. How many years of data are available for each country in the `GDP.xlsx` dataset? How many countries do not have data for all the years?
+4. Suppose that the firm’s production function is $Q=F(K,L)=50K^{0.5}L^{0.5}$. Suppose, too, that the price of labour w=5 and the price of capital r=20. What is the cost minimising input bundle if the firm wants to produce 1,000 units per year?

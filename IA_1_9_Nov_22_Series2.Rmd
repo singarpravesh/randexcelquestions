@@ -1,0 +1,68 @@
+---
+title: "Internal Assessment 1"
+author: "Series 2"
+output: pdf_document
+---
+
+\begin{center}
+{\Large ECON03SEC1}\\
+{\Large Department of Economics}\\
+{\Large Presidency University, Kolkata}\\
+{\large Full Marks: 30}\\
+{\large 09/11/2022}
+\end{center}
+
+
+Answer the following questions: [$6 \times 5 = 30$]
+
+1. Explain the following codes and their outputs.
+```{r, eval=FALSE}
+a1 <- 12; class(a1); length(a1)
+names(a1) <- 'Number'; names(a1)
+```
+
+2. Using the `mpg` dataset in the `ggplot2` package, replicate the following plot.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="50%"}
+library(tidyverse)
+na.omit(mpg) %>% 
+ggplot(aes(manufacturer, displ))+
+  geom_bar(aes(fill = class),
+           stat = "identity")+
+  coord_flip()
+```
+
+3. Tidy and replicate the `us_rent_income` dataset in the `tidyr` package as given below.
+
+```{r, echo=FALSE}
+us_rent_income %>% 
+  pivot_wider(names_from = variable,
+              values_from = estimate) %>% 
+  filter(moe <= 3) %>% 
+  arrange(rent)
+
+```
+
+4. Which species have blue eyes in the `starwars` dataset in the `dplyr` package?
+```{r, echo=FALSE, eval=FALSE}
+starwars %>% 
+  filter( eye_color == "blue") %>% 
+  group_by(species) %>% 
+  count()
+```
+
+5. How many female humans are there in the `starwars` dataset in the `dplyr` package ?
+```{r, echo=FALSE, eval=FALSE}
+starwars %>% 
+  filter(species == "Human" & sex == "female") %>% 
+  select(species, sex) %>% 
+  count()
+```
+
+6. In the `starwars` dataset in the `dplyr` package, which species has the most number of blue eye colour?
+```{r, echo=FALSE, eval=FALSE}
+starwars %>% 
+  filter(eye_color== "blue") %>% 
+  group_by(species) %>% 
+  count()
+```

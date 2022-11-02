@@ -1,0 +1,79 @@
+---
+title: "Internal Assessment 1"
+author: "Series 1"
+output: pdf_document
+---
+
+
+\begin{center}
+{\Large ECON03SEC1}\\
+{\Large Department of Economics}\\
+{\Large Presidency University, Kolkata}\\
+{\large Full Marks: 30}\\
+{\large 09/11/2022}
+\end{center}
+
+
+Answer the following questions: [$6 \times 5 = 30$]
+
+1. Run the following codes and explain why the value of `address1` is shown as `NA` while the `class(address1)` is `numeric`?
+```{r, eval=FALSE}
+x1 <- "Presidency"
+x2 <- "University"
+x3 <- "Kolkata"
+address <- c(x1, x2, x3)
+address1 <- as.numeric(address)
+address1
+class(address1)
+```
+
+2.Using the `iris` dataset in the base R `datasets` package, replicate the following plot.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="50%"}
+library(tidyverse)
+ggplot(iris)+
+  geom_point(aes(x = Sepal.Length,
+                 y = Sepal.Width,
+                 shape = Species
+                 ),
+             col = "red")+
+  facet_wrap(Species ~ .)
+```
+
+3. Tidy and replicate the `us_rent_income` dataset in the `tidyr` package as given below.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+us_rent_income %>% 
+  pivot_wider(names_from = variable,
+              values_from = estimate) %>% 
+  filter(moe <= 3) %>% 
+  arrange(rent)
+
+```
+
+4. Calculate the mean *mpg* (miles per gallon) of the  cars with 6 and 4 cylinders in `mtcars` dataset in the base R `datasets` package.
+```{r, echo=FALSE, eval=FALSE}
+mtcars %>% 
+  select(mpg,cyl) %>% 
+  filter(cyl %in% c(6,4)) %>%
+  group_by(cyl) %>% 
+  summarise(mean(mpg))
+```
+
+5. Which type of transmission (manual or automatic) has a higher variation (standard deviation) of *mpg* in the `mtcars` dataset in the base R `datasets` package?
+
+```{r, echo=FALSE, eval=FALSE}
+mtcars %>% 
+  select(mpg, am) %>% 
+  group_by(am) %>% 
+  summarise(sd(mpg))
+  
+```
+
+6. What is the average displacement of a manual car with 4 cylinders in the `mtcars` dataset in the base R `datasets` package?
+```{r, echo=FALSE, eval=FALSE}
+mtcars %>% 
+  filter(cyl == 4 & am == 1) %>% 
+  summarise(mean(disp))
+```

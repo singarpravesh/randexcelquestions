@@ -1,0 +1,4 @@
+library(haven)
+library(tidyverse)
+EVEN22_SEC2_IHDS_HH_panel <- read_dta("C:/Users/Pravesh/Desktop/EVEN22_SEC2_IHDS_HH_panel.dta")
+View(EVEN22_SEC2_IHDS_HH_panel)
