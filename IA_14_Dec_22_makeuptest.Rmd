@@ -1,0 +1,74 @@
+---
+title: "Internal Assessment 1"
+author: "Makeup Test"
+output: pdf_document
+---
+
+\begin{center}
+{\Large ECON03SEC1}\\
+{\Large Department of Economics}\\
+{\Large Presidency University, Kolkata}\\
+{\large Full Marks: 30}\\
+{\large 14/12/2022}
+\end{center}
+
+
+Answer the following questions: [$6 \times 5 = 30$]
+
+
+1. Explain the following codes and their outputs.
+```{r, eval=FALSE}
+a2 <- matrix(1:9, nrow = 3)
+colnames(a2) <- c("A", "B", "C")
+
+a2[c(TRUE, FALSE, TRUE), c("B", "A")]
+```
+
+
+2. Using the `midwest` dataset in the `ggplot2` package, replicate the following plot.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+options(scipen = 999)
+library(tidyverse)
+data(midwest)
+midwest %>% 
+  filter(poptotal >= 0 & poptotal <= 500000) %>% 
+ggplot()+
+  geom_point(aes(x = area,
+                 y = poptotal,
+                 col = state,
+                 size = popdensity), 
+             alpha = 0.5)
+```
+
+3. Tidy and replicate the `fish_encounters` dataset in the `tidyr` package as given below.
+
+```{r, echo=FALSE}
+fish_encounters %>% 
+  pivot_wider(names_from = station,
+              values_from = seen) %>% 
+  na.omit()  
+```
+
+4. Which specie has the longest and widest petal in the `iris` dataset in the base R `datasets` packages?
+```{r, echo=FALSE, eval=FALSE}
+iris %>% 
+  group_by(Species) %>% 
+  summarise(max(Petal.Length), max(Petal.Width))
+```
+
+5. How many and which species have sepal length longer than their mean value.
+```{r}
+iris %>% 
+  filter(Sepal.Length > mean(Sepal.Length)) %>% 
+  group_by(Species) %>% 
+  summarise(`Sepal.Length > mean(Sepal.Length)` = n())
+```
+
+6. Which specie has the highest difference in their petal width.
+```{r}
+iris %>% 
+  group_by(Species) %>% 
+  summarise(sd = sd(Petal.Width))
+```
+
