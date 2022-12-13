@@ -21,6 +21,8 @@ Answer the following questions: [$4 \times 5 = 20$]
 3. What is the average displacement of a manual car with 4 cylinders in the `mtcars.xlsx``` dataset?
 4. How does the number of cylinders `cyl` affect the mileage `mpg` for a given horsepower `hp`? Calculate the partial correlation in the `mtcars.xlsx` dataset.
 
+Answer the following questions: [$4 \times 5 = 20$]
+
 5. Calculate the HDI dimension indicies and the HDI using the following formulae $$DimensionIndex = \frac{\text{actual value} - \text{minimum value}}{\text{maximum value} -\text{minimum value}}$$
 
 $$
@@ -39,5 +41,6 @@ kableExtra::kable(
 )
 ```
 
+The actual values are in the data. Note that the *knowledge dimension index* is the average of the dimension index for the expected years of schooling, and the mean years of schooling.
 
 6. 
