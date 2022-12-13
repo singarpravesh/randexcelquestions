@@ -1,6 +1,8 @@
 ---
 title: "Internal Assessment 3"
 output: pdf_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -23,7 +25,7 @@ Answer the following questions: [$4 \times 5 = 20$]
 
 Answer the following questions: [$4 \times 5 = 20$]
 
-5. Calculate the HDI dimension indicies and the HDI using the following formulae $$DimensionIndex = \frac{\text{actual value} - \text{minimum value}}{\text{maximum value} -\text{minimum value}}$$
+5. Calculate the HDI dimension indices and the HDI using the following formula $$DimensionIndex = \frac{\text{actual value} - \text{minimum value}}{\text{maximum value} -\text{minimum value}}$$
 
 $$
 HDI = (I_{health} \times I_{education} \times I_{income})^{1/3}
@@ -42,5 +44,27 @@ kableExtra::kable(
 ```
 
 The actual values are in the data. Note that the *knowledge dimension index* is the average of the dimension index for the expected years of schooling, and the mean years of schooling.
+
+
+```{r, echo=FALSE, eval=FALSE}
+library(readxl)
+library(tidyverse)
+HDI <- read_excel("HDI.xlsx")
+hdi <- as_tibble(HDI)
+
+# dimension indices and hdi calculation
+hdi %>% 
+  rename(le2021 = `Life expectancy at birth (years) 2021`,
+         eys2021 = `Expected years of schooling (years) 2021`,
+         mys2021 = `Mean years of schooling (years) 2021`,
+         gni2021 = `Gross national income (GNI) per capita (2017 PPP$)`,
+         rank2020 = `HDI rank 2020`,
+         country = Country) %>% 
+  mutate(country, ihealth = (le2021 - 20)/(85-20),
+          ieducation = ((eys2021 - 0)/(18) + (mys2021 - 0)/(15))/2,
+          iincome = (log(gni2021) - log(100))/(log(75000) - log(100)),
+          hdi = (ihealth * ieducation * iincome)^(1/3)) 
+  
+```
 
 6. 
