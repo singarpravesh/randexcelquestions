@@ -58,7 +58,7 @@ iris %>%
 ```
 
 5. How many and which species have sepal length longer than their mean value.
-```{r}
+```{r, echo=FALSE, eval=FALSE}
 iris %>% 
   filter(Sepal.Length > mean(Sepal.Length)) %>% 
   group_by(Species) %>% 
@@ -66,7 +66,7 @@ iris %>%
 ```
 
 6. Which specie has the highest difference in their petal width.
-```{r}
+```{r, echo=FALSE, eval=FALSE}
 iris %>% 
   group_by(Species) %>% 
   summarise(sd = sd(Petal.Width))
