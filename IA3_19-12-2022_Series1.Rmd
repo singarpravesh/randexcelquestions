@@ -15,15 +15,15 @@ editor_options:
 \end{center}
 
 
-Answer the following questions: [$4 \times 5 = 20$]
+Answer the following questions using Excel: [$4 \times 5 = 20$]
 
 
 1. Using the data `GDP.xlsx`, for any two countries plot separate line charts for the components of GDP (Household Consumption Expenditure, Government final consumption expenditure, Net exports and Gross Capital formation).
 2. Suppose that the firm’s production function is $Q = F(K, L) = 50K^{0.5}L^{0.5}$. Suppose, too, that the price of labour $w=5$ and the price of capital $r=20$. What is the cost minimising input bundle if the firm wants to produce 1,000 units per year?
-3. What is the average displacement of a manual car with 4 cylinders in the `mtcars.xlsx``` dataset?
+3. What is the average displacement of a manual car with 4 cylinders in the `mtcars.xlsx` dataset?
 4. How does the number of cylinders `cyl` affect the mileage `mpg` for a given horsepower `hp`? Calculate the partial correlation in the `mtcars.xlsx` dataset.
 
-Answer the following questions: [$4 \times 5 = 20$]
+Answer the following questions using R: [$4 \times 5 = 20$]
 
 5. Calculate the HDI dimension indices and the HDI using the following formula $$DimensionIndex = \frac{\text{actual value} - \text{minimum value}}{\text{maximum value} -\text{minimum value}}$$
 
@@ -46,7 +46,7 @@ kableExtra::kable(
 The actual values are in the data. Note that the *knowledge dimension index* is the average of the dimension index for the expected years of schooling, and the mean years of schooling.
 
 
-```{r, echo=FALSE, eval=FALSE}
+```{r, echo=FALSE,message=FALSE, warning=FALSE}
 library(readxl)
 library(tidyverse)
 HDI <- read_excel("HDI.xlsx")
@@ -63,8 +63,40 @@ hdi %>%
   mutate(country, ihealth = (le2021 - 20)/(85-20),
           ieducation = ((eys2021 - 0)/(18) + (mys2021 - 0)/(15))/2,
           iincome = (log(gni2021) - log(100))/(log(75000) - log(100)),
-          hdi = (ihealth * ieducation * iincome)^(1/3)) 
+          hdi = (ihealth * ieducation * iincome)^(1/3)) -> hdi1
   
 ```
 
-6. 
+6. Create a factor variable `group` that takes the values according to the HDI values in the table given below
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+tibble(Classification = c("Very high HDI", "High HDI", "Medium HDI", "Low HDI"),
+       HDI = c("0.800 and  above", "0.700 - 0.799", "0.550 - 0.699", "Below 0.550")) %>% 
+  kableExtra::kable()
+```
+
+and then summarize the min, max, standard deviation, and mean for each group. The output is shown in the table below.
+
+```{r, echo=FALSE, eval=TRUE}
+hdi1 %>% 
+  transmute(country, hdi, group = factor(if_else(hdi > 0.8, "Very high HDI",
+          if_else(hdi >= 0.7 & hdi <= 0.799, "High HDI",
+                  if_else(hdi >= 0.55 & hdi <= 0.699, "Medium HDI",
+                          if_else(hdi < 0.550, "Low HDI", "")))),
+          levels = c("Very high HDI", "High HDI", "Medium HDI", "Low HDI" ))) -> hdi1
+hdi1 %>% 
+  group_by(group) %>% 
+  summarise(min = min(hdi),
+            max = max(hdi),
+            sd = sd(hdi),
+            average = mean(hdi))
+```
+
+7. Using the 
+```{r}
+hdi1 %>% 
+  ggplot(aes(x = group, y = country ))+
+  geom_point()
+
+
+
