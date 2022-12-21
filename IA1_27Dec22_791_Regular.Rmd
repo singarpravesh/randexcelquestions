@@ -1,0 +1,118 @@
+---
+output: pdf_document
+editor_options: 
+  chunk_output_type: console
+---
+
+
+\begin{center}
+{\Large Internal Assessment 1}\\
+{\Large ECON0791}\\
+{\Large Department of Economics}\\
+{\Large Presidency University, Kolkata}\\
+{\large Full Marks: 15}\\
+{\large 27/12/2022}
+\end{center}
+
+
+Answer the following questions using R: [4+3+4+4]
+
+1. Using the `HDI.xlsx` data calculate the HDI dimension indices and the HDI values using the following formula $$DimensionIndex = \frac{\text{actual value} - \text{minimum value}}{\text{maximum value} -\text{minimum value}}$$
+
+$$
+HDI = (I_{health} \times I_{education} \times I_{income})^{1/3}
+$$
+for health, income, and education respectively for all the countries. Refer to the following table for the minimum and maximum values:
+
+```{r, echo=FALSE}
+kableExtra::kable(
+  dplyr::tibble(Dimension = c("Health", "Education", "", "Standard of Living"),
+                Indicator = c("Life Expectancy (years", "Expected years of schooling (years",
+                              "Mean years of schooling (years)",
+                              "GNI percapita (2011 PPP $)"),
+                Minimum = c(20, 0 ,0, 100),
+                Maximum = c(85, 18, 15, 75000))
+)
+```
+
+The actual values are in the data. Note that the *knowledge dimension index* is the average of the dimension index for the expected years of schooling, and the mean years of schooling.
+
+
+```{r, echo=FALSE,message=FALSE, warning=FALSE}
+library(readxl)
+library(tidyverse)
+HDI <- read_excel("HDI.xlsx")
+hdi <- as_tibble(HDI)
+
+# dimension indices and hdi calculation
+hdi %>% 
+  rename(le2021 = `Life expectancy at birth (years) 2021`,
+         eys2021 = `Expected years of schooling (years) 2021`,
+         mys2021 = `Mean years of schooling (years) 2021`,
+         gni2021 = `Gross national income (GNI) per capita (2017 PPP$)`,
+         rank2020 = `HDI rank 2020`,
+         country = Country) %>% 
+  mutate(ihealth = (le2021 - 20)/(85-20),
+          ieducation = ((eys2021 - 0)/(18) + (mys2021 - 0)/(15))/2,
+          iincome = (log(gni2021) - log(100))/(log(75000) - log(100)),
+          hdi = (ihealth * ieducation * iincome)^(1/3)) -> hdi1
+  
+```
+
+
+
+2. Create a factor variable `classification` that takes the values according to the HDI values in the table given below
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+tibble(Classification = c("Very high HDI", "High HDI", "Medium HDI", "Low HDI"),
+       HDI = c("0.800 and  above", "0.700 - 0.799", "0.550 - 0.699", "Below 0.550")) %>% 
+  kableExtra::kable()
+```
+
+and then summarize the min, max, standard deviation, and mean for each group. The output is shown in the table below.
+
+```{r, echo=FALSE, eval=TRUE}
+hdi1 %>% 
+  mutate(group = factor(if_else(hdi > 0.8, "Very high HDI",
+          if_else(hdi >= 0.7 & hdi <= 0.799, "High HDI",
+                  if_else(hdi >= 0.55 & hdi <= 0.699, "Medium HDI",
+                          if_else(hdi < 0.550, "Low HDI", "")))),
+          levels = c("Very high HDI", "High HDI", "Medium HDI", "Low HDI" ))) -> hdi1
+hdi1 %>% 
+  group_by(group) %>% 
+  summarise(min = min(hdi),
+            max = max(hdi),
+            sd = sd(hdi),
+            average = mean(hdi))
+```
+
+
+3. Replicate the following plot using the same data. Note that the colour of the circle indicates the HDI value of the country.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(ggrepel)
+
+hdi1 %>% 
+  ggplot(aes(x = gni2021, y = le2021 ))+
+  geom_point(aes(col = group))+
+  geom_point(aes(x = hdi1[hdi1$country == "India","gni2021"][[1]], 
+                 y = hdi1[hdi1$country == "India","le2021"][[1]]))+
+  geom_label_repel(aes(label = if_else(country == "India", as.character(country), "")),
+                   nudge_x = 15000, nudge_y = -5)+
+  labs(x = "Gross national income (GNI) per capita (2017 PPP$)",
+       y = "Life expectancy at birth (years) 2021")
+  
+```
+
+4. Using the `HDI_TS.xlsx` data, plot bar graphs for China, India, and United States and comment on the trend of HDI during the years 2018 to 2021.
+```{r, echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
+hdits <- read_xlsx("HDI_TS.xlsx") %>% as_tibble()
+hdits %>% 
+  pivot_longer(cols = `2018`:`2021`, names_to = "year", values_to = "hdi", names_transform = list(year = as.integer)) %>% 
+  filter(country == "India" | country == "China" | country == "United States") %>% 
+  ggplot()+
+  geom_bar(aes(x=as.factor(year), y = hdi), stat = "identity")+
+  facet_wrap(vars(country))
+```
+
