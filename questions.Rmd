@@ -1,8 +1,8 @@
 ---
 title: "ECON03SEC1"
 subtitle: "Internal Assessment 2"
-author: "Full Marks: 40"
-date: "21/01/2022"
+author: "Full Marks: 50"
+date: "08/11/2023"
 output:
   pdf_document: default
   html_document:

@@ -1,0 +1,52 @@
+---
+title: "Sample Questions"
+date: "2023-11-01"
+output: html_document
+---
+
+## ggplot2
+
+1. Using the `mpg` dataset in the `ggplot2` package, replicate the following plot.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_wrap(~ class, nrow = 2)
+```
+
+## dplyr
+
+2. In the `starwars` dataset in the `dplyr` package, which species has the most number of blue eye colour?
+```{r, echo=FALSE, eval=FALSE}
+starwars %>% 
+  filter(eye_color== "blue") %>% 
+  group_by(species) %>% 
+  count()
+```
+
+## tidyr
+
+3. Tidy and replicate the `construction` dataset in the `tidyr` package as given below. 
+
+```{r, echo=FALSE}
+construction %>% 
+  pivot_longer(cols = Northeast:West, 
+               names_to = "Region",
+               values_to = "Completed_Units_Region") %>% 
+  pivot_longer(cols = `1 unit`: `5 units or more`,
+               names_to = "Size",
+               values_to = "Completed_Units_Size")
+```
+
+## base R
+4. Run the following codes and explain why the value of `address1` is shown as `NA` while the `class(address1)` is `numeric`?
+```{r, eval=FALSE}
+x1 <- "Presidency"
+x2 <- "University"
+x3 <- "Kolkata"
+address <- c(x1, x2, x3)
+address1 <- as.numeric(address)
+address1
+class(address1)
+```
