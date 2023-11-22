@@ -1,0 +1,30 @@
+---
+output: pdf_document
+editor_options: 
+  chunk_output_type: console
+---
+
+
+\begin{center}
+{\Large Internal Assessment 2}\\
+{\Large ECON03SEC1}\\
+{\Large Regular and Backlog}\\
+{\large Full Marks: 50}\\
+{\large 28 Nov 2023}
+\end{center}
+
+
+Answer the following questions using Excel: [$10 \times 5 = 50$]
+
+
+1. Which specie has the longest and the widest petal in the `iris.xlsx` data?
+2. What is the average displacement of a manual car with 4 cylinders in the `mtcars.xlsx` dataset?
+3. Calculate the mean *mpg* (miles per gallon) of the  cars with 6 and 4 cylinders in `mtcars.xlsx` dataset?
+4. How many years of data are available for each country in the `GDP.xlsx` dataset? How many countries do not have data for all the years?
+5. In the file `GDP.xlsx` how many countries do not have data on GDP?
+6. Rank (without ties) the countries according to the Gross Domestic Product (GDP) in the `GDP.xlsx` dataset.
+7. How does the number of cylinders `cyl` affect the mileage `mpg` for a given horsepower `hp`? Calculate the partial correlation in the `mtcars.xlsx` dataset.
+8. How many missing values are there in total in the `GDP.xlsx` dataset? Find how many countries are listed in the data without using the filter option?
+9. Using the data `GDP.xlsx`, for any two countries plot separate line charts for the components of GDP (Household Consumption Expenditure, Government final consumption expenditure, Net exports and Gross Capital formation).
+10. Suppose that the firm’s production function is $Q=F(K,L)=50K^{0.5}L^{0.5}$. Suppose, too, that the price of labour w=5 and the price of capital r=20. What is the cost minimising input bundle if the firm wants to produce 1,000 units per year?
+
